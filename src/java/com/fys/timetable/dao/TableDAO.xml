@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fys.timetable.dao.TableDAO">
+    <select id="select" parameterType="Integer" resultType="Table">
+        select * from plan where date = #{date} order by time limit 0,4;
+    </select>
+
+    <!-- 根据日期和时间查询该时间段是否存在事件 -->
+    <select id="isExist" parameterType="Table" resultType="Integer">
+        select count(*) from plan where date = #{date} and time = #{time};
+    </select>
+
+    <!-- 根据日期和时间删除已经存在的事件 -->
+    <delete id="delete" parameterType="Table">
+      delete from plan where date = #{date} and time = #{time};
+    </delete>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="Table">
+        insert into plan (date, time, thing) values (#{date}, #{time}, #{thing});
+    </insert>
+</mapper>
